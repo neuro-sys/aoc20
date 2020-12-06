@@ -31,9 +31,12 @@ here swap - 1 cells / constant #numbers
 	dup 2020 swap - ( n1 n2 )
 	dup numbers #numbers n-in? if false else 2drop true then ;
 
+: numbers-end?  numbers #numbers cells + >= ;
+: abort?        numbers-end? if abort" No results" then ;
+
 \ Search for numbers adding to 2020 in numbers array
 : find-2020 ( -- n1 n2 )
-	numbers begin dup @ none-for-2020 while cell+ repeat rot drop ;
+	numbers begin dup abort? dup @ none-for-2020 while cell+ repeat rot drop ;
 
 \ Find pair adding to 2020 and print product
 find-2020 * u. cr
